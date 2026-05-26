@@ -1,0 +1,12 @@
+# Render.com 用デプロイ設定（Blueprint）
+# このファイルがあると、Renderが自動で構成を読み取ってくれます
+services:
+  - type: web
+    name: hiragajan
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20

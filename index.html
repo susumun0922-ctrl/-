@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>🀄 ひらがじゃん</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div id="app">
+  <!-- ロビー画面 -->
+  <section id="lobby" class="screen">
+    <div class="hero">
+      <h1>🀄 ひらがじゃん</h1>
+      <p class="subtitle">ひらがなで遊ぶ、本格派ワード麻雀</p>
+    </div>
+
+    <div class="card">
+      <label>👤 あなたの名前</label>
+      <input id="name-input" type="text" maxlength="12" placeholder="例：はなこ">
+
+      <div class="btn-row">
+        <button id="create-btn" class="primary big">🆕 新しい部屋を作る</button>
+      </div>
+
+      <div class="divider"><span>または</span></div>
+
+      <label>🔑 部屋コードで参加</label>
+      <input id="code-input" type="text" maxlength="5" placeholder="例：ABCDE" style="text-transform:uppercase; letter-spacing:6px; text-align:center; font-size:24px;">
+      <div class="btn-row">
+        <button id="join-btn" class="secondary big">🚪 部屋に入る</button>
+      </div>
+    </div>
+
+    <details class="rules-card" open>
+      <summary>📖 ルール早見表（タップで開閉）</summary>
+      <div class="rules">
+        <h3>あがり条件</h3>
+        <p><b>「2文字×1単語 + 3文字×4単語」= 計5単語（14文字）</b> を揃えるとあがり！</p>
+        <h3>使えるアクション</h3>
+        <ul>
+          <li>🎴 <b>ツモ</b>：自分の番で山から1枚引く（自動）</li>
+          <li>🀫 <b>捨てる</b>：手牌を1枚タップして「捨てる」</li>
+          <li>🎌 <b>リーチ</b>：あと1枚であがれる状態で宣言（1000点供託）</li>
+          <li>🔊 <b>ポン</b>：他人の捨て牌+自分の同字2枚で副露</li>
+          <li>📣 <b>カン</b>：同字4枚で槓（嶺上ツモ）</li>
+          <li>🎯 <b>ロン</b>：他人の捨て牌であがり</li>
+          <li>🎉 <b>ツモ上がり</b>：自分のツモであがり</li>
+        </ul>
+        <h3>役と点数</h3>
+        <ul>
+          <li><b>立直</b> +1飜 / <b>一発</b> +1飜 / <b>ツモ</b> +1飜</li>
+          <li><b>清音作り</b>（全単語が清音のみ）+2飜</li>
+          <li><b>濁り組み</b>（全単語に濁音類）+2飜</li>
+          <li><b>嶺上開花・海底・河底</b> +1飜</li>
+          <li><b>役満</b>（8000点）：国士無双・しりとり・四槓子・天和・清音一色</li>
+        </ul>
+        <p class="hint">初期持ち点：25000点 / 役満：8000点 / 通常：飜数で2倍ずつ（上限8000）</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ゲーム画面 -->
+  <section id="game" class="screen hidden">
+    <header class="game-header">
+      <div class="room-info">
+        <span>部屋: <b id="room-code-display"></b></span>
+        <button id="copy-code" class="mini">📋</button>
+        <button id="show-qr" class="mini">📱 QR</button>
+      </div>
+      <div class="game-meta">
+        <span id="wall-count">🀫 -</span>
+        <span id="riichi-bet-display"></span>
+        <span id="game-state-display"></span>
+      </div>
+    </header>
+
+    <!-- ガイダンス（次にやるべきことを表示） -->
+    <div id="guidance" class="guidance"></div>
+
+    <div class="players-area" id="players-area"></div>
+
+    <div class="center-area">
+      <div class="discards-section">
+        <h3>河（捨て牌）</h3>
+        <div id="discards-display"></div>
+      </div>
+      <div class="last-discard-section" id="last-discard-section"></div>
+    </div>
+
+    <div class="my-area">
+      <div class="my-melds" id="my-melds"></div>
+      <h3>あなたの手牌 <span id="my-name-display"></span></h3>
+      <div class="my-hand" id="my-hand"></div>
+      <div class="action-bar" id="action-bar"></div>
+
+      <div id="lobby-controls" class="hidden">
+        <p id="lobby-info">部屋にいる人を待っています…</p>
+        <div id="qr-area" class="qr-area"></div>
+        <button id="start-btn" class="primary big hidden">🎲 ゲーム開始</button>
+      </div>
+    </div>
+
+    <!-- QRモーダル -->
+    <div id="qr-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2>📱 友達を招待</h2>
+        <p>スマホでこのQRコードを読み取ると、すぐに参加できます</p>
+        <div id="qr-display"></div>
+        <p class="hint">招待URL:<br><code id="invite-url"></code></p>
+        <p class="hint">部屋コード: <b id="invite-code"></b></p>
+        <div class="modal-actions">
+          <button id="qr-copy-url" class="secondary">URLをコピー</button>
+          <button id="qr-close" class="mini">閉じる</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- アガり宣言モーダル -->
+    <div id="declare-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2>🎉 あがり宣言</h2>
+        <p>下の手牌を順にタップ→単語が完成したら「✂️ 区切る」</p>
+        <p class="hint"><b>2文字×1単語 + 3文字×4単語</b> の構成にしてください</p>
+        <div id="declare-source"></div>
+        <div id="declare-words"></div>
+        <div class="modal-actions">
+          <button id="declare-separator" class="secondary">✂️ 単語を区切る</button>
+          <button id="declare-undo" class="secondary">↩️ 戻す</button>
+          <button id="declare-submit" class="primary">✅ あがり！</button>
+          <button id="declare-cancel" class="mini">キャンセル</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 暗カン選択モーダル -->
+    <div id="ankan-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2>📣 暗カンする字を選択</h2>
+        <div id="ankan-choices"></div>
+        <div class="modal-actions">
+          <button id="ankan-cancel" class="mini">キャンセル</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 投票モーダル -->
+    <div id="vote-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2>🔔 あがり判定</h2>
+        <p><b id="vote-player-name"></b> さんが <b id="vote-type"></b> を宣言！</p>
+        <div id="vote-words"></div>
+        <div id="vote-score"></div>
+        <div id="vote-dict-result"></div>
+        <p><b>この上がりを認めますか？</b></p>
+        <div class="modal-actions">
+          <button id="vote-approve" class="primary big">⭕ 認める</button>
+          <button id="vote-reject" class="danger big">❌ 認めない</button>
+        </div>
+        <div id="vote-status"></div>
+      </div>
+    </div>
+
+    <!-- 結果モーダル -->
+    <div id="result-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2 id="result-title"></h2>
+        <div id="result-body"></div>
+        <div class="modal-actions">
+          <button id="result-new-game" class="primary hidden">🔄 もう一局</button>
+          <button id="result-close" class="secondary">閉じる</button>
+        </div>
+      </div>
+    </div>
+
+    <details class="log-details">
+      <summary>📜 ログ / チャット</summary>
+      <div class="game-log" id="game-log"></div>
+      <div class="chat-bar">
+        <input id="chat-input" type="text" placeholder="チャット…" maxlength="100">
+        <button id="chat-send" class="mini">送信</button>
+      </div>
+    </details>
+  </section>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script src="/client.js"></script>
+</body>
+</html>
