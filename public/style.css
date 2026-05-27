@@ -1,42 +1,64 @@
-/* ひらがじゃん v2 - モバイル最適化 */
+/* ひらがじゃん v3 - 雀魂風デザイン */
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 html, body {
-  font-family: -apple-system, "Hiragino Maru Gothic Pro", "Yu Gothic", "Meiryo", sans-serif;
-  background: linear-gradient(135deg, #0a4d3a 0%, #0e5d44 50%, #073827 100%);
+  font-family: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", "Meiryo", serif;
+  background: #0d2818;
   color: #f5efe0;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   overscroll-behavior: none;
+  touch-action: manipulation;
 }
-body { padding: 12px; padding-bottom: 80px; }
+body {
+  /* 麻雀卓のフェルト背景 */
+  background:
+    radial-gradient(ellipse at center, #1a5d3a 0%, #0d3520 60%, #051a10 100%),
+    repeating-linear-gradient(45deg, rgba(0,0,0,0.03) 0 2px, transparent 2px 4px);
+  background-blend-mode: overlay;
+  padding: 0;
+  min-height: 100vh;
+}
 .hidden { display: none !important; }
 
-/* ========== ロビー ========== */
-.screen { max-width: 720px; margin: 0 auto; }
+/* Google Fontsで日本語書道風フォント */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700;900&family=Yuji+Syuku&display=swap');
+
+/* ========== ロビー画面 ========== */
+.screen { max-width: 720px; margin: 0 auto; padding: 16px; padding-bottom: 80px; }
 .hero { text-align: center; padding: 20px 0; }
-.hero h1 { font-size: 42px; letter-spacing: 3px; text-shadow: 2px 2px 0 #000; }
-.subtitle { color: #c4d8c8; margin-top: 8px; font-size: 14px; }
+.hero h1 {
+  font-family: "Yuji Syuku", "Noto Serif JP", serif;
+  font-size: 56px;
+  letter-spacing: 4px;
+  color: #ffd96b;
+  text-shadow: 3px 3px 0 #000, 0 0 30px rgba(255,217,107,0.5);
+}
+.subtitle { color: #c4d8c8; margin-top: 8px; font-size: 14px; letter-spacing: 1px; }
 
 .card {
-  background: rgba(255, 250, 235, 0.97);
-  color: #2a2218;
+  background: linear-gradient(180deg, rgba(60, 40, 20, 0.95) 0%, rgba(40, 25, 15, 0.95) 100%);
+  color: #f5efe0;
+  border: 2px solid #8b6f3a;
   border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  padding: 24px;
+  box-shadow:
+    0 0 0 4px #4a3520 inset,
+    0 8px 32px rgba(0,0,0,0.5);
   margin-bottom: 16px;
 }
-.card label { display: block; font-weight: bold; margin: 10px 0 6px; font-size: 14px; color: #5a4a30; }
+.card label { display: block; font-weight: bold; margin: 12px 0 6px; font-size: 14px; color: #ffd96b; }
 .card input[type="text"] {
   width: 100%;
   padding: 14px;
   font-size: 18px;
-  border: 2px solid #d4c8a0;
+  border: 2px solid #8b6f3a;
   border-radius: 10px;
-  background: #fff;
+  background: rgba(255, 252, 240, 0.95);
   color: #2a2218;
   font-family: inherit;
+  font-weight: bold;
 }
-.card input[type="text"]:focus { outline: none; border-color: #b8985a; }
+.card input[type="text"]:focus { outline: none; border-color: #ffd96b; box-shadow: 0 0 0 4px rgba(255,217,107,0.3); }
 
 .btn-row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
 button {
@@ -48,35 +70,52 @@ button {
   cursor: pointer;
   font-weight: bold;
   transition: transform 0.05s, box-shadow 0.1s;
-  min-height: 44px; /* タッチターゲット */
+  min-height: 44px;
 }
 button.big { font-size: 18px; padding: 16px 24px; width: 100%; }
-button:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-button:active:not(:disabled) { transform: translateY(0); }
-button:disabled { opacity: 0.5; cursor: not-allowed; }
-button.primary { background: #c8392a; color: #fff; }
-button.secondary { background: #d4c8a0; color: #2a2218; }
-button.danger { background: #8b2a1d; color: #fff; }
-button.mini { font-size: 12px; padding: 8px 12px; min-height: 36px; background: #5a6c5a; color: #fff; }
-button.highlight {
-  animation: pulse-yellow 1.2s infinite;
-  background: #ffd96b !important;
-  color: #2a2218 !important;
+button:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+button:active:not(:disabled) { transform: translateY(1px); }
+button:disabled { opacity: 0.4; cursor: not-allowed; }
+button.primary {
+  background: linear-gradient(180deg, #d4452f 0%, #a8281a 100%);
+  color: #fff;
+  border: 1px solid #6e1a10;
+  box-shadow: 0 2px 0 #6e1a10, 0 4px 12px rgba(0,0,0,0.3);
 }
-@keyframes pulse-yellow {
-  0%,100% { box-shadow: 0 0 0 0 rgba(255,217,107,0.7); }
-  50% { box-shadow: 0 0 0 12px rgba(255,217,107,0); }
+button.secondary {
+  background: linear-gradient(180deg, #8b6f3a 0%, #5a4520 100%);
+  color: #fff8e8;
+  border: 1px solid #4a3520;
+  box-shadow: 0 2px 0 #4a3520, 0 4px 12px rgba(0,0,0,0.3);
+}
+button.danger {
+  background: linear-gradient(180deg, #6b1818 0%, #4a0e0e 100%);
+  color: #fff;
+  box-shadow: 0 2px 0 #2a0808, 0 4px 12px rgba(0,0,0,0.3);
+}
+button.mini { font-size: 12px; padding: 8px 12px; min-height: 36px; background: linear-gradient(180deg, #5a6c5a 0%, #3a4c3a 100%); color: #fff; box-shadow: 0 2px 0 #1a2c1a; }
+button.highlight {
+  animation: pulse-gold 1.2s infinite;
+  background: linear-gradient(180deg, #ffd96b 0%, #d4a83a 100%) !important;
+  color: #2a2218 !important;
+  border: 1px solid #8b6f3a !important;
+  box-shadow: 0 2px 0 #8b6f3a, 0 0 20px rgba(255,217,107,0.7) !important;
+}
+@keyframes pulse-gold {
+  0%,100% { box-shadow: 0 2px 0 #8b6f3a, 0 0 0 0 rgba(255,217,107,0.8); }
+  50% { box-shadow: 0 2px 0 #8b6f3a, 0 0 0 16px rgba(255,217,107,0); }
 }
 
 .divider {
   display: flex; align-items: center; margin: 16px 0;
-  color: #8a7a5a; font-size: 12px;
+  color: #c4a060; font-size: 12px;
 }
-.divider::before, .divider::after { content: ""; flex: 1; border-bottom: 1px solid #d4c8a0; }
+.divider::before, .divider::after { content: ""; flex: 1; border-bottom: 1px solid #8b6f3a; }
 .divider span { padding: 0 10px; }
 
 .rules-card {
-  background: rgba(0,0,0,0.25);
+  background: rgba(0,0,0,0.4);
+  border: 1px solid #8b6f3a;
   border-radius: 12px;
   padding: 14px 18px;
   margin-top: 12px;
@@ -86,227 +125,454 @@ button.highlight {
   font-weight: bold;
   color: #ffd96b;
   font-size: 15px;
+  font-family: "Yuji Syuku", serif;
+  letter-spacing: 2px;
 }
 .rules { margin-top: 12px; line-height: 1.7; font-size: 13px; }
-.rules h3 { margin: 12px 0 4px; color: #ffd96b; font-size: 14px; }
+.rules h3 { margin: 12px 0 4px; color: #ffd96b; font-size: 14px; font-family: "Yuji Syuku", serif; }
 .rules ul { padding-left: 22px; }
-.rules .hint { font-size: 12px; color: #c4d8c8; margin-top: 8px; }
 
-/* ========== ゲーム画面 ========== */
-#game { max-width: 1100px; }
+/* ========== ゲーム画面 - 麻雀卓レイアウト ========== */
+#game { max-width: 100%; padding: 0; }
+
 .game-header {
   display: flex; justify-content: space-between; align-items: center;
-  background: rgba(0,0,0,0.35);
+  background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 100%);
+  border-bottom: 2px solid #8b6f3a;
   padding: 8px 12px;
-  border-radius: 10px;
-  margin-bottom: 10px;
   font-size: 13px;
   flex-wrap: wrap; gap: 6px;
+  position: sticky; top: 0; z-index: 50;
 }
 .room-info, .game-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.room-info b { font-size: 16px; letter-spacing: 3px; color: #ffd96b; }
+.room-info b { font-size: 16px; letter-spacing: 3px; color: #ffd96b; font-family: monospace; }
 #game-state-display { color: #ffd96b; font-weight: bold; }
 #riichi-bet-display { color: #ff9c5b; font-weight: bold; }
 
 /* ガイダンス */
 .guidance {
-  background: linear-gradient(90deg, #ffd96b, #ffb74d);
+  background: linear-gradient(90deg, #d4a83a, #ffd96b, #d4a83a);
   color: #2a2218;
   padding: 10px 14px;
+  margin: 8px 12px;
   border-radius: 10px;
+  border: 1px solid #8b6f3a;
   font-weight: bold;
-  margin-bottom: 10px;
-  font-size: 15px;
+  font-size: 14px;
   display: flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 4px 16px rgba(255, 183, 77, 0.3);
+  box-shadow: 0 4px 16px rgba(255, 183, 77, 0.4);
   animation: guidance-fade 0.4s;
 }
-.guidance.waiting { background: rgba(255,255,255,0.1); color: #f5efe0; box-shadow: none; }
+.guidance.waiting { background: rgba(0,0,0,0.5); color: #c4d8c8; box-shadow: none; border-color: rgba(255,255,255,0.1); }
 @keyframes guidance-fade {
   from { opacity: 0; transform: translateY(-6px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.players-area {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 6px;
-  margin-bottom: 12px;
-}
-.player-card {
-  background: rgba(255,255,255,0.08);
-  border: 2px solid transparent;
-  border-radius: 10px;
-  padding: 8px;
+/* 麻雀卓本体 */
+.table-area {
   position: relative;
+  margin: 8px 12px;
+  background:
+    radial-gradient(ellipse at center, #1f6b42 0%, #134a2c 70%, #0a3320 100%);
+  border: 12px solid;
+  border-image: linear-gradient(135deg, #6b4a20, #8b6f3a, #4a3520, #8b6f3a) 1;
+  border-radius: 20px;
+  padding: 60px 90px;
+  min-height: 380px;
+  box-shadow:
+    inset 0 0 60px rgba(0,0,0,0.4),
+    0 8px 32px rgba(0,0,0,0.6);
+}
+
+/* 卓中央の情報 */
+.table-center {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-family: "Yuji Syuku", serif;
+  z-index: 1;
+  background: radial-gradient(circle, rgba(0,0,0,0.5) 0%, transparent 70%);
+  padding: 12px 18px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.table-center .wall-info {
+  color: #ffd96b;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+}
+.table-center .wall-info b { font-size: 24px; }
+.table-center .riichi-sticks {
+  margin-top: 8px;
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+.riichi-stick {
+  width: 60px; height: 6px;
+  background: linear-gradient(90deg, #fff8e8 0%, #d4c8a0 100%);
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+  position: relative;
+}
+.riichi-stick::after {
+  content: ""; position: absolute;
+  left: 50%; top: 50%; transform: translate(-50%,-50%);
+  width: 8px; height: 8px; background: #d4452f; border-radius: 50%;
+}
+
+/* プレイヤーカード - 卓の四方に配置 */
+.player-card {
+  position: absolute;
+  background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 100%);
+  border: 2px solid #8b6f3a;
+  border-radius: 10px;
+  padding: 8px 12px;
+  min-width: 120px;
+  text-align: center;
+  z-index: 2;
 }
 .player-card.current {
   border-color: #ffd96b;
-  background: rgba(255, 217, 107, 0.15);
-  box-shadow: 0 0 16px rgba(255, 217, 107, 0.5);
+  background: linear-gradient(180deg, rgba(255,217,107,0.25) 0%, rgba(0,0,0,0.5) 100%);
+  box-shadow: 0 0 24px rgba(255, 217, 107, 0.6);
+  animation: current-pulse 2s ease-in-out infinite;
+}
+@keyframes current-pulse {
+  0%,100% { box-shadow: 0 0 24px rgba(255, 217, 107, 0.6); }
+  50% { box-shadow: 0 0 36px rgba(255, 217, 107, 0.9); }
 }
 .player-card.disconnected { opacity: 0.4; }
-.player-card.riichi::before {
+.player-card.riichi::after {
   content: "🎌 リーチ";
-  position: absolute; top: -8px; right: 6px;
-  background: #c8392a; color: #fff;
-  padding: 2px 8px; border-radius: 8px;
-  font-size: 11px; font-weight: bold;
+  position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+  background: linear-gradient(180deg, #d4452f, #a8281a);
+  color: #fff;
+  padding: 2px 10px; border-radius: 10px;
+  font-size: 10px; font-weight: bold;
+  white-space: nowrap;
+  border: 1px solid #6e1a10;
 }
-.player-name { font-weight: bold; font-size: 13px; }
-.player-score { font-size: 16px; color: #ffd96b; font-weight: bold; }
-.player-meta { font-size: 10px; color: #c4d8c8; margin: 2px 0; }
-.player-tiles-back { display: flex; gap: 1px; flex-wrap: wrap; margin-top: 4px; }
-.tile-back { width: 12px; height: 16px; background: #073827; border: 1px solid #0a4d3a; border-radius: 2px; }
-.player-melds-display { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px; }
-.meld-group { display: flex; gap: 1px; background: rgba(0,0,0,0.25); padding: 2px; border-radius: 4px; }
-
-.center-area {
-  background: rgba(0,0,0,0.25);
-  border-radius: 10px;
-  padding: 10px;
-  margin-bottom: 12px;
-  min-height: 80px;
+.player-card .player-name {
+  font-weight: bold;
+  font-size: 13px;
+  color: #fff8e8;
+  font-family: "Noto Serif JP", serif;
 }
-.center-area h3 { font-size: 12px; color: #c4d8c8; margin-bottom: 6px; }
-#discards-display, #last-discard-section { display: flex; flex-wrap: wrap; gap: 3px; }
-.last-discard-section {
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 1px dashed rgba(255,255,255,0.15);
+.player-card .player-score {
+  font-size: 18px;
+  color: #ffd96b;
+  font-weight: 900;
+  font-family: monospace;
 }
-.discard-label { font-size: 12px; color: #ffd96b; margin-bottom: 4px; width: 100%; font-weight: bold; }
-
-.my-area {
-  background: rgba(255, 250, 235, 0.97);
+.player-card .player-meta {
+  font-size: 10px;
+  color: #c4d8c8;
+  margin-top: 2px;
+}
+.player-card .player-wind {
+  position: absolute;
+  top: -8px; right: -8px;
+  width: 24px; height: 24px;
+  background: radial-gradient(circle, #ffd96b 0%, #d4a83a 100%);
   color: #2a2218;
-  border-radius: 14px;
-  padding: 12px;
-  box-shadow: 0 -4px 16px rgba(0,0,0,0.3);
+  border: 1px solid #8b6f3a;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex; align-items: center; justify-content: center;
+  font-family: "Yuji Syuku", serif;
 }
-.my-area h3 { font-size: 13px; color: #5a4a30; margin-bottom: 8px; }
-.my-hand, .my-melds { display: flex; flex-wrap: wrap; gap: 5px; min-height: 70px; align-items: flex-end; }
-.my-melds { margin-bottom: 10px; min-height: 0; }
-.my-melds:empty { display: none; }
 
-/* 牌 */
+/* 4人配置: 中央揃えのためcalcを使う */
+.player-card { z-index: 3; }
+.player-card.pos-bottom { bottom: 8px; left: calc(50% - 75px); width: 150px; }
+.player-card.pos-top { top: 8px; left: calc(50% - 75px); width: 150px; }
+.player-card.pos-left { left: 8px; top: calc(50% - 40px); width: 110px; }
+.player-card.pos-right { right: 8px; top: calc(50% - 40px); width: 110px; }
+
+/* currentアニメーションをtransformで上書きしないように */
+.player-card.current.pos-bottom,
+.player-card.current.pos-top,
+.player-card.current.pos-left,
+.player-card.current.pos-right { transform: none; }
+
+/* 他プレイヤーの伏せ牌 */
+.player-tiles-back {
+  display: flex; gap: 1px; justify-content: center; margin-top: 4px;
+}
+.tile-back {
+  width: 14px; height: 20px;
+  background: linear-gradient(135deg, #1a4d2e 0%, #0d3520 100%);
+  border: 1px solid #4a6c4a;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+.player-melds-display { display: flex; gap: 3px; flex-wrap: wrap; margin-top: 4px; justify-content: center; }
+
+/* 河（捨て牌エリア） */
+.discards-area {
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  max-width: 180px;
+  max-height: 90px;
+  overflow: hidden;
+  justify-content: center;
+}
+.discards-area.pos-bottom { bottom: 110px; left: calc(50% - 90px); }
+.discards-area.pos-top { top: 110px; left: calc(50% - 90px); }
+.discards-area.pos-left { left: 125px; top: calc(50% - 45px); max-width: 100px; }
+.discards-area.pos-right { right: 125px; top: calc(50% - 45px); max-width: 100px; }
+.discards-area.empty { display: none; }
+
+/* 最後の捨て牌をハイライト */
+.last-discard-highlight {
+  position: absolute;
+  z-index: 3;
+  animation: discard-glow 1.5s ease-in-out infinite;
+}
+@keyframes discard-glow {
+  0%,100% { filter: drop-shadow(0 0 8px rgba(255, 217, 107, 0.6)); }
+  50% { filter: drop-shadow(0 0 16px rgba(255, 217, 107, 1)); }
+}
+
+/* 牌 - リアル象牙風デザイン */
 .tile {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 58px;
-  background: linear-gradient(180deg, #fefdf6 0%, #f0e8d0 100%);
-  color: #2a2218;
-  border: 2px solid #8a7a5a;
-  border-radius: 6px;
-  font-size: 26px;
-  font-weight: bold;
-  font-family: "Hiragino Maru Gothic Pro", "Yu Gothic", sans-serif;
-  box-shadow: 0 3px 0 #5a4a30, 0 4px 6px rgba(0,0,0,0.2);
+  width: 38px;
+  height: 52px;
+  background:
+    linear-gradient(180deg, #fffdf2 0%, #f5ecd6 70%, #e0d4b0 100%);
+  color: #1a1208;
+  border: 1px solid #8a7a5a;
+  border-radius: 4px 4px 5px 5px;
+  font-size: 24px;
+  font-weight: 700;
+  font-family: "Yuji Syuku", "Noto Serif JP", "Yu Mincho", serif;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.9),
+    inset 0 -2px 4px rgba(139, 111, 58, 0.2),
+    0 3px 0 #6b5a3a,
+    0 5px 8px rgba(0,0,0,0.4);
   cursor: pointer;
-  transition: transform 0.1s, box-shadow 0.1s;
+  transition: transform 0.15s, box-shadow 0.15s;
   user-select: none;
   position: relative;
   flex-shrink: 0;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.5);
 }
-.tile:active { transform: translateY(1px); }
-.tile.dakuon { background: linear-gradient(180deg, #ffe9d0 0%, #f5c8a0 100%); }
-.tile.handakuon { background: linear-gradient(180deg, #ffd8e8 0%, #f5a8c8 100%); }
-.tile.yoon, .tile.choon { background: linear-gradient(180deg, #d8f0ff 0%, #a8c8f5 100%); }
+.tile:active { transform: translateY(2px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 1px 0 #6b5a3a; }
+.tile.dakuon { background: linear-gradient(180deg, #fff5e8 0%, #f5d5a8 70%, #e0bc88 100%); }
+.tile.handakuon { background: linear-gradient(180deg, #ffeef5 0%, #f5c8d8 70%, #e0a8c0 100%); }
+.tile.yoon, .tile.choon { background: linear-gradient(180deg, #e8f5ff 0%, #b8d8f5 70%, #98b8e0 100%); }
+
 .tile.selected {
-  transform: translateY(-10px);
-  border-color: #c8392a;
-  box-shadow: 0 13px 0 #5a4a30, 0 14px 12px rgba(200, 57, 42, 0.5);
+  transform: translateY(-14px);
+  border-color: #d4452f;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.9),
+    0 17px 0 #6b5a3a,
+    0 19px 12px rgba(212, 69, 47, 0.5),
+    0 0 12px rgba(255, 217, 107, 0.4);
 }
-.tile.small { width: 26px; height: 36px; font-size: 16px; box-shadow: 0 2px 0 #5a4a30; border-width: 1px; }
+.tile.small {
+  width: 24px; height: 32px; font-size: 14px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 2px 0 #6b5a3a, 0 3px 4px rgba(0,0,0,0.3);
+  border-width: 1px;
+}
+.tile.tiny {
+  width: 16px; height: 22px; font-size: 11px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 1px 0 #6b5a3a;
+}
 .tile.tsumo {
-  margin-left: 10px;
-  animation: tsumo-glow 1.5s ease-in-out infinite;
+  margin-left: 12px;
+  animation: tsumo-pulse 1.5s ease-in-out infinite;
 }
-@keyframes tsumo-glow {
-  0%, 100% { box-shadow: 0 3px 0 #5a4a30, 0 0 0 rgba(255,217,107,0); }
-  50% { box-shadow: 0 3px 0 #5a4a30, 0 0 16px rgba(255,217,107,0.8); }
+@keyframes tsumo-pulse {
+  0%,100% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 3px 0 #6b5a3a, 0 0 12px rgba(255,217,107,0.4); }
+  50% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 3px 0 #6b5a3a, 0 0 24px rgba(255,217,107,1); }
+}
+
+/* 自分の手牌エリア（下部） */
+.my-area {
+  background: linear-gradient(180deg, rgba(40,25,15,0.95) 0%, rgba(20,10,5,0.98) 100%);
+  border-top: 3px solid #8b6f3a;
+  padding: 12px;
+  box-shadow: 0 -8px 24px rgba(0,0,0,0.6);
+  z-index: 40;
+  margin-top: 8px;
+}
+.my-area.in-game {
+  position: sticky;
+  bottom: 0;
+}
+.my-area-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #ffd96b;
+  margin-bottom: 8px;
+  font-family: "Yuji Syuku", serif;
+  letter-spacing: 1px;
+}
+.my-melds, .my-hand {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  min-height: 60px;
+  align-items: flex-end;
+  padding: 4px;
+}
+.my-melds {
+  min-height: 0;
+  background: rgba(0,0,0,0.3);
+  border-radius: 6px;
+  margin-bottom: 8px;
+  padding: 4px 8px;
+}
+.my-melds:empty { display: none; }
+
+/* ドラッグ用スタイル */
+.my-hand .tile {
+  cursor: grab;
+  touch-action: none;
+}
+.my-hand .tile.dragging {
+  opacity: 0.3;
+  cursor: grabbing;
+}
+.my-hand .tile.drag-over {
+  border-color: #ffd96b;
+  box-shadow: inset 0 0 0 2px #ffd96b, 0 3px 0 #6b5a3a;
+}
+.my-hand .tile.swap-target {
+  animation: swap-target-pulse 0.8s infinite;
+}
+@keyframes swap-target-pulse {
+  0%,100% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 3px 0 #6b5a3a, 0 0 8px rgba(91, 192, 222, 0.5); }
+  50% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 3px 0 #6b5a3a, 0 0 16px rgba(91, 192, 222, 1); }
+}
+
+/* フローティング牌（ドラッグ中の表示用） */
+.tile.floating {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: scale(1.1);
+  opacity: 0.9;
+  transition: none;
 }
 
 .action-bar {
-  display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;
+  display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap;
   justify-content: center;
 }
-.action-bar button { flex: 1 1 100px; }
+.action-bar button { flex: 1 1 80px; max-width: 160px; font-size: 14px; padding: 10px 14px; }
 
 #lobby-controls { text-align: center; padding: 16px 0; }
-#lobby-info { color: #5a4a30; margin-bottom: 12px; font-size: 14px; }
+#lobby-info { color: #ffd96b; margin-bottom: 12px; font-size: 14px; }
 .qr-area { margin: 12px 0; display: flex; justify-content: center; }
 .qr-area canvas, .qr-area img { border-radius: 8px; background: #fff; padding: 8px; }
 
 /* モーダル */
 .modal {
   position: fixed; inset: 0;
-  background: rgba(0,0,0,0.75);
+  background: rgba(0,0,0,0.85);
   display: flex; align-items: center; justify-content: center;
-  z-index: 100;
+  z-index: 200;
   padding: 12px;
+  backdrop-filter: blur(4px);
 }
 .modal-content {
-  background: #fff8e8;
-  color: #2a2218;
+  background:
+    linear-gradient(180deg, #3a2a18 0%, #2a1a10 100%);
+  color: #f5efe0;
+  border: 2px solid #8b6f3a;
   border-radius: 16px;
   padding: 20px;
   max-width: 600px;
   width: 100%;
   max-height: 92vh;
   overflow-y: auto;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  box-shadow:
+    inset 0 0 0 2px #4a3520,
+    0 20px 60px rgba(0,0,0,0.7);
 }
-.modal-content h2 { margin-bottom: 12px; color: #c8392a; font-size: 22px; }
-.modal-content p { margin: 6px 0; font-size: 14px; }
-.modal-content .hint { font-size: 12px; color: #8a7a5a; }
+.modal-content h2 {
+  margin-bottom: 12px;
+  color: #ffd96b;
+  font-size: 24px;
+  font-family: "Yuji Syuku", serif;
+  letter-spacing: 2px;
+}
+.modal-content p { margin: 6px 0; font-size: 14px; color: #f5efe0; }
+.modal-content .hint { font-size: 12px; color: #c4a060; }
 .modal-actions { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
 .modal-actions button { flex: 1 1 100px; }
 
 #declare-source, #declare-words { margin: 10px 0; }
-#declare-source { display: flex; flex-wrap: wrap; gap: 4px; padding: 8px; background: rgba(0,0,0,0.04); border-radius: 8px; min-height: 70px; }
+#declare-source {
+  display: flex; flex-wrap: wrap; gap: 4px;
+  padding: 10px; background: rgba(0,0,0,0.5);
+  border: 1px dashed #8b6f3a;
+  border-radius: 8px; min-height: 70px;
+}
 .word-group {
-  display: flex; gap: 3px; padding: 6px; background: #fff;
-  border: 2px dashed #b8985a; border-radius: 8px;
-  margin-bottom: 5px; min-height: 50px;
+  display: flex; gap: 3px; padding: 8px; background: rgba(255,255,255,0.05);
+  border: 2px dashed #8b6f3a; border-radius: 8px;
+  margin-bottom: 6px; min-height: 50px;
   align-items: center; flex-wrap: wrap;
 }
-.word-group.complete { border-style: solid; border-color: #2a7a2a; background: #f0fff0; }
-.word-group-label { font-size: 11px; color: #8a7a5a; min-width: 50px; }
-.word-text { margin-left: 6px; font-weight: bold; color: #c8392a; font-size: 16px; }
+.word-group.complete { border-style: solid; border-color: #5a9c5a; background: rgba(90, 156, 90, 0.15); }
+.word-group-label { font-size: 11px; color: #c4a060; min-width: 50px; }
+.word-text { margin-left: 6px; font-weight: bold; color: #ffd96b; font-size: 18px; font-family: "Yuji Syuku", serif; }
 
 #vote-words .vote-word {
-  display: inline-block; padding: 6px 12px; margin: 4px;
-  background: #fff; border-radius: 8px;
-  font-size: 18px; font-weight: bold;
+  display: inline-block; padding: 8px 14px; margin: 4px;
+  background: linear-gradient(180deg, #fff8e8 0%, #d4c8a0 100%);
+  color: #2a2218;
+  border-radius: 8px;
+  font-size: 22px; font-weight: bold;
+  font-family: "Yuji Syuku", serif;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
 }
 #vote-score {
-  margin: 12px 0; padding: 12px;
-  background: linear-gradient(90deg, #ffd96b, #ffb74d);
-  border-radius: 10px;
-  font-weight: bold; text-align: center;
+  margin: 12px 0; padding: 16px;
+  background: linear-gradient(135deg, #d4a83a 0%, #ffd96b 50%, #d4a83a 100%);
+  color: #2a2218;
+  border-radius: 12px;
+  border: 2px solid #8b6f3a;
+  text-align: center;
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.2);
 }
-#vote-score .points { font-size: 32px; color: #c8392a; }
-#vote-score .yaku-list { font-size: 13px; color: #5a4a30; margin-top: 6px; }
+#vote-score .points { font-size: 40px; color: #6b1818; font-weight: 900; font-family: "Yuji Syuku", serif; text-shadow: 2px 2px 0 rgba(255,255,255,0.5); }
+#vote-score .yaku-list { font-size: 13px; color: #2a2218; margin-top: 8px; font-weight: bold; }
 #vote-dict-result { margin: 10px 0; font-size: 13px; }
-.dict-ok { color: #2a7a2a; padding: 3px 0; }
-.dict-ng { color: #c8392a; padding: 3px 0; }
+.dict-ok { color: #80d080; padding: 3px 0; }
+.dict-ng { color: #ff9080; padding: 3px 0; }
 
 #ankan-choices { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
 #ankan-choices button { flex: 0 0 auto; }
 
 .log-details {
-  background: rgba(0,0,0,0.3);
+  background: rgba(0,0,0,0.5);
+  border: 1px solid #4a3520;
   border-radius: 8px;
   padding: 6px 10px;
-  margin-top: 10px;
+  margin: 10px 12px;
   font-size: 12px;
 }
-.log-details summary { cursor: pointer; color: #ffd96b; }
+.log-details summary { cursor: pointer; color: #ffd96b; font-family: "Yuji Syuku", serif; }
 .game-log {
   padding: 6px 0;
   max-height: 150px;
@@ -318,32 +584,63 @@ button.highlight {
 .chat-bar { display: flex; gap: 6px; margin-top: 6px; }
 .chat-bar input {
   flex: 1; padding: 8px 10px;
-  border: none; border-radius: 8px;
-  background: rgba(255,255,255,0.9); color: #2a2218;
+  border: 1px solid #8b6f3a; border-radius: 8px;
+  background: rgba(0,0,0,0.6); color: #f5efe0;
   font-family: inherit; font-size: 13px;
 }
 
-code { background: rgba(0,0,0,0.06); padding: 2px 6px; border-radius: 4px; font-size: 11px; word-break: break-all; }
+code { background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 4px; font-size: 11px; word-break: break-all; color: #ffd96b; }
 #qr-display { display: flex; justify-content: center; padding: 12px; }
 #qr-display canvas { border-radius: 8px; }
 
+/* アニメーション：牌を引く */
+@keyframes draw-tile {
+  from { transform: translateX(-100px) rotateY(180deg); opacity: 0; }
+  to { transform: translateX(0) rotateY(0deg); opacity: 1; }
+}
+@keyframes discard-tile {
+  from { transform: scale(1) translateY(0); opacity: 1; }
+  50% { transform: scale(1.2) translateY(-10px); opacity: 1; }
+  to { transform: scale(0.8) translateY(20px); opacity: 0.7; }
+}
+.tile.draw-anim { animation: draw-tile 0.5s ease-out; }
+
 /* スマホ最適化 */
 @media (max-width: 600px) {
-  body { padding: 8px; padding-bottom: 60px; }
-  .hero h1 { font-size: 32px; }
-  .tile { width: 34px; height: 48px; font-size: 20px; }
+  .screen { padding: 12px; }
+  .hero h1 { font-size: 38px; }
+  .table-area {
+    padding: 60px 16px;
+    min-height: 380px;
+    border-width: 8px;
+  }
+  .player-card.pos-bottom { left: calc(50% - 60px); width: 120px; }
+  .player-card.pos-top { left: calc(50% - 60px); width: 120px; }
+  .player-card.pos-left { top: calc(50% - 35px); width: 90px; }
+  .player-card.pos-right { top: calc(50% - 35px); width: 90px; }
+  .discards-area.pos-bottom { left: calc(50% - 70px); bottom: 95px; max-width: 140px; }
+  .discards-area.pos-top { left: calc(50% - 70px); top: 95px; max-width: 140px; }
+  .discards-area.pos-left { left: 100px; top: calc(50% - 35px); max-width: 70px; }
+  .discards-area.pos-right { right: 100px; top: calc(50% - 35px); max-width: 70px; }
+  .tile { width: 32px; height: 44px; font-size: 19px; }
   .tile.small { width: 20px; height: 28px; font-size: 12px; }
-  .game-header { font-size: 12px; padding: 6px 10px; }
+  .tile.tiny { width: 12px; height: 17px; font-size: 9px; }
+  .player-card { min-width: 90px; padding: 6px 8px; font-size: 11px; }
+  .player-card .player-name { font-size: 11px; }
+  .player-card .player-score { font-size: 15px; }
+  .discards-area { max-width: 130px; }
+  .game-header { font-size: 11px; padding: 6px 10px; }
   .modal-content { padding: 16px; }
-  .modal-content h2 { font-size: 18px; }
-  .players-area { grid-template-columns: repeat(2, 1fr); }
-  .my-area { padding: 10px; }
-  .my-area h3 { font-size: 12px; }
-  .guidance { font-size: 13px; padding: 8px 10px; }
-  .action-bar button { flex: 1 1 70px; font-size: 13px; padding: 10px 12px; }
+  .modal-content h2 { font-size: 20px; }
+  .my-area { padding: 8px; }
+  .guidance { font-size: 12px; padding: 8px 10px; margin: 6px 8px; }
+  .action-bar button { flex: 1 1 60px; font-size: 12px; padding: 8px 10px; min-height: 40px; }
+  .table-center .wall-info { font-size: 14px; }
+  .table-center .wall-info b { font-size: 22px; }
 }
 
 @media (max-width: 380px) {
-  .tile { width: 30px; height: 42px; font-size: 18px; }
-  .players-area { grid-template-columns: 1fr; }
+  .table-area { padding: 40px 35px; }
+  .tile { width: 28px; height: 38px; font-size: 17px; }
+  .player-card { min-width: 75px; padding: 4px 6px; }
 }
